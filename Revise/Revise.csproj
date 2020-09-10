@@ -4,11 +4,14 @@
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Authors> jackwakefield, RavenX8</Authors>
+    <Authors>jackwakefield;RavenX8;L3nn0x</Authors>
     <Description>An attempt to create an open source map editor/SDK/sandbox for ROSE Online </Description>
     <PackageLicenseUrl>https://github.com/dev-osrose/Revise/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/dev-osrose/Revise</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Company> dev-osrose</Company>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
