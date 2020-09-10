@@ -1,7 +1,6 @@
-﻿<Project Sdk="">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>Library</OutputType>
     <RootNamespace>Revise.Files.Tests</RootNamespace>
     <AssemblyName>Revise.Files Tests</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -108,32 +107,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ArtificialIntelligenceFileTests.cs" />
-    <Compile Include="BoneFileTests.cs" />
-    <Compile Include="CameraFileTests.cs" />
-    <Compile Include="CharacterFileTests.cs" />
-    <Compile Include="ConversationFileTests.cs" />
-    <Compile Include="DataFileTests.cs" />
-    <Compile Include="EffectFileTests.cs" />
-    <Compile Include="HeightmapFileTests.cs" />
-    <Compile Include="HelpFileTests.cs" />
-    <Compile Include="LanguageFileTests.cs" />
-    <Compile Include="LevelOfDetailFileTests.cs" />
-    <Compile Include="LightmapFileTests.cs" />
-    <Compile Include="MapDataFileTests.cs" />
-    <Compile Include="ModelFileTests.cs" />
-    <Compile Include="ModelListFileTests.cs" />
-    <Compile Include="MotionFileTests.cs" />
-    <Compile Include="MovementFileTests.cs" />
-    <Compile Include="ParticleFileTests.cs" />
-    <Compile Include="SpriteFileTests.cs" />
-    <Compile Include="StringTableFileTests.cs" />
-    <Compile Include="TableFileTests.cs" />
-    <Compile Include="TileFileTests.cs" />
-    <Compile Include="VirtualFileIndexFileTests.cs" />
-    <Compile Include="ZoneFileTests.cs" />
   </ItemGroup>
 </Project>
