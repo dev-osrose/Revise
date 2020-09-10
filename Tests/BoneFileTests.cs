@@ -27,7 +27,7 @@ namespace Revise.Tests {
     /// <summary>
     /// Provides testing for the <see cref="BoneFile"/> class.
     /// </summary>
-    [TestFixture]
+    [TestFixture, SingleThreadedAttribute]
     public class BoneFileTests {
         private const string TEST_FILE = "Tests/Files/CART01.ZMD";
 

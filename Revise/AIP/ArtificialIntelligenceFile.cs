@@ -84,8 +84,8 @@ namespace Revise.AIP
         /// </summary>
         /// <param name="stream">The stream to read from.</param>
         public override void Load(Stream stream) {
-            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("EUC-KR"));
-            AlignedBinaryReader alignedReader = new AlignedBinaryReader(stream, Encoding.GetEncoding("EUC-KR"));
+            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("utf-8"));
+            AlignedBinaryReader alignedReader = new AlignedBinaryReader(stream, Encoding.GetEncoding("utf-8"));
 
             int patternCount = reader.ReadInt32();
             IdleInterval = reader.ReadInt32();
@@ -164,8 +164,8 @@ namespace Revise.AIP
         /// </summary>
         /// <param name="stream">The stream to save to.</param>
         public override void Save(Stream stream) {
-            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("EUC-KR"));
-            AlignedBinaryWriter alignedWriter = new AlignedBinaryWriter(stream, Encoding.GetEncoding("EUC-KR"));
+            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("utf-8"));
+            AlignedBinaryWriter alignedWriter = new AlignedBinaryWriter(stream, Encoding.GetEncoding("utf-8"));
 
             writer.Write(Patterns.Count);
             writer.Write(IdleInterval);

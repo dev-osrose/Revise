@@ -59,7 +59,7 @@ namespace Revise.PTL {
         /// </summary>
         /// <param name="stream">The stream to read from.</param>
         public override void Load(Stream stream) {
-            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("EUC-KR"));
+            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("utf-8"));
 
             int sequenceCount = reader.ReadInt32();
 
@@ -110,7 +110,7 @@ namespace Revise.PTL {
         /// </summary>
         /// <param name="stream">The stream to save to.</param>
         public override void Save(Stream stream) {
-            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("EUC-KR"));
+            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("utf-8"));
 
             writer.Write(Sequences.Count);
 

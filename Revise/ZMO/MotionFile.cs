@@ -105,7 +105,7 @@ namespace Revise.ZMO {
         /// </summary>
         /// <param name="stream">The stream to read from.</param>
         public override void Load(Stream stream) {
-            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("EUC-KR"));
+            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("utf-8"));
             
             string identifier = reader.ReadNullTerminatedString();
 
@@ -144,7 +144,7 @@ namespace Revise.ZMO {
         /// </summary>
         /// <param name="stream">The stream to save to.</param>
         public override void Save(Stream stream) {
-            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("EUC-KR"));
+            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("utf-8"));
 
             writer.WriteString(FILE_IDENTIFIER);
             writer.Write((byte)0);
