@@ -2,8 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Revise.Files.Tests</RootNamespace>
-    <AssemblyName>Revise.Files Tests</AssemblyName>
+    <AssemblyName>Revise.Files.Tests</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <OutputPath>bin\x86\Debug\</OutputPath>
