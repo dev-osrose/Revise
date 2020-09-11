@@ -38,7 +38,7 @@ public static class BinaryWriterExtensions {
     /// Initializes the <see cref="BinaryReaderExtensions"/> class.
     /// </summary>
     static BinaryWriterExtensions() {
-        DefaultEncoding = Encoding.GetEncoding("utf-8");
+        DefaultEncoding = Encoding.GetEncoding("us-ascii");
     }
 
     /// <summary>

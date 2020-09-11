@@ -107,7 +107,7 @@ namespace Revise.STB {
         /// <exception cref="Revise.Exceptions.FileIdentifierMismatchException">Thrown when the specified file has the incorrect file header expected.</exception>
         /// <exception cref="Revise.Exceptions.InvalidVersionException">Thrown when the version of the file is invalid.</exception>
         public override void Load(Stream stream) {
-            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("utf-8"));
+            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("us-ascii"));
 
             string identifier = reader.ReadString(3);
 
@@ -160,7 +160,7 @@ namespace Revise.STB {
         /// </summary>
         /// <param name="stream">The stream to save to.</param>
         public override void Save(Stream stream) {
-            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("utf-8"));
+            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("us-ascii"));
 
             writer.WriteString(FILE_IDENTIFIER);
             writer.Write('1');

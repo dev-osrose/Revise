@@ -299,7 +299,7 @@ namespace Revise.ZON {
         /// </summary>
         /// <param name="stream">The stream to read from.</param>
         public override void Load(Stream stream) {
-            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("utf-8"));
+            BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding("us-ascii"));
 
             int blockCount = reader.ReadInt32();
 
@@ -392,7 +392,7 @@ namespace Revise.ZON {
         /// </summary>
         /// <param name="stream">The stream to save to.</param>
         public override void Save(Stream stream) {
-            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("utf-8"));
+            BinaryWriter writer = new BinaryWriter(stream, Encoding.GetEncoding("us-ascii"));
 
             writer.Write(BLOCK_COUNT);
             long[] offsets = new long[BLOCK_COUNT];

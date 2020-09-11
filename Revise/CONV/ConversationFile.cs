@@ -83,7 +83,7 @@ namespace Revise.CON {
         /// </summary>
         /// <param name="stream">The stream to read from.</param>
         public override void Load(Stream stream) {
-            Encoding encoding = Encoding.GetEncoding("utf-8");
+            Encoding encoding = Encoding.GetEncoding("us-ascii");
             BinaryReader reader = new BinaryReader(stream, encoding);
 
             stream.Seek(0, SeekOrigin.End);
@@ -178,7 +178,7 @@ namespace Revise.CON {
         /// </summary>
         /// <param name="stream">The stream to save to.</param>
         public override void Save(Stream stream) {
-            Encoding encoding = Encoding.GetEncoding("utf-8");
+            Encoding encoding = Encoding.GetEncoding("us-ascii");
             BinaryWriter writer = new BinaryWriter(stream, encoding);
 
             short functionMask = 0;
