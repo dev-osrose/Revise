@@ -27,4 +27,4 @@ jobs:
     - name: Create Package
       run: dotnet pack --configuration Release
     - name: Publish
-      run: dotnet nuget push "bin/Release/Revise.1.0.0.nupkg" --source "github"
+      run: dotnet nuget push "Revise/bin/Release/Revise.1.0.0.nupkg" --source "github"
