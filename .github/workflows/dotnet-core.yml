@@ -22,5 +22,9 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    - name: Auth with GitHub
+      run: dotnet nuget add source https://nuget.pkg.github.com/$GITHUB_ACTOR/index.json -n github -u $GITHUB_ACTOR -p ${{secrets.GITHUB_TOKEN}}
     - name: Create Package
-      run: dotnet pack
+      run: dotnet pack --configuration Release
+    - name: Publish
+      run: dotnet nuget push "bin/Release/Revise.1.0.0.nupkg" --source "github"
