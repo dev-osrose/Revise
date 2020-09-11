@@ -12,6 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -19,6 +20,7 @@ jobs:
         source-url: https://nuget.pkg.github.com/dev-osrose/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -26,6 +28,8 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Create Package
-      run: dotnet pack --configuration Release
+      run: dotnet pack --configuration Release Revise
     - name: Publish
       run: dotnet nuget push "Revise/bin/Release/Revise.1.0.0.nupkg" --skip-duplicate --no-symbols true -k ${{secrets.GITHUB_TOKEN}}
+      env:
+        DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
