@@ -39,7 +39,7 @@ public static class BinaryReaderExtensions {
     /// Initializes the <see cref="BinaryReaderExtensions"/> class.
     /// </summary>
     static BinaryReaderExtensions() {
-        DefaultEncoding = Encoding.GetEncoding("EUC-KR");
+        DefaultEncoding = Encoding.GetEncoding("us-ascii");
     }
 
     /// <summary>
