@@ -30,6 +30,6 @@ jobs:
     - name: Create Package
       run: dotnet pack --configuration Release Revise
     - name: Publish
-      run: dotnet nuget push "Revise/bin/Release/Revise.1.0.0.nupkg" --skip-duplicate --no-symbols true -k ${{secrets.GITHUB_TOKEN}}
+      run: dotnet nuget push "Revise/bin/Release/Revise.*.nupkg" --skip-duplicate --no-symbols true -k ${{secrets.GITHUB_TOKEN}}
       env:
         DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
