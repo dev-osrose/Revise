@@ -23,20 +23,20 @@ using System.IO;
 using NUnit.Framework;
 using Revise.ZMD;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="BoneFile"/> class.
     /// </summary>
     [TestFixture]
     public class BoneFileTests {
-        private const string TEST_FILE = "Tests/Files/CART01.ZMD";
+        private const string TestFile = "Tests/Files/CART01.ZMD";
 
         /// <summary>
         /// Tests the load method.
         /// </summary>
         [Test]
         public void TestLoadMethod() {
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -48,7 +48,7 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             BoneFile boneFile = new BoneFile();
-            boneFile.Load(TEST_FILE);
+            boneFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             boneFile.Save(savedStream);
@@ -69,21 +69,21 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(boneFile.Bones.Count, savedBoneFile.Bones.Count, "Bone counts do not match");
-            Assert.AreEqual(boneFile.DummyBones.Count, savedBoneFile.DummyBones.Count, "Dummy bones counts do not match");
+            Assert.That(boneFile.Bones.Count.Equals(savedBoneFile.Bones.Count), "Bone counts do not match");
+            Assert.That(boneFile.DummyBones.Count.Equals(savedBoneFile.DummyBones.Count), "Dummy bones counts do not match");
 
             for (int i = 0; i < boneFile.Bones.Count; i++) {
-                Assert.AreEqual(boneFile.Bones[i].Name, savedBoneFile.Bones[i].Name, "Bone names do not match");
-                Assert.AreEqual(boneFile.Bones[i].Parent, savedBoneFile.Bones[i].Parent, "Bone parents do not match");
-                Assert.AreEqual(boneFile.Bones[i].Translation, savedBoneFile.Bones[i].Translation, "Bone positions do not match");
-                Assert.AreEqual(boneFile.Bones[i].Rotation, savedBoneFile.Bones[i].Rotation, "Bone rotations do not match");
+                Assert.That(boneFile.Bones[i].Name.Equals(savedBoneFile.Bones[i].Name), "Bone names do not match");
+                Assert.That(boneFile.Bones[i].Parent.Equals(savedBoneFile.Bones[i].Parent), "Bone parents do not match");
+                Assert.That(boneFile.Bones[i].Translation.Equals(savedBoneFile.Bones[i].Translation), "Bone positions do not match");
+                Assert.That(boneFile.Bones[i].Rotation.Equals(savedBoneFile.Bones[i].Rotation), "Bone rotations do not match");
             }
 
             for (int i = 0; i < boneFile.DummyBones.Count; i++) {
-                Assert.AreEqual(boneFile.DummyBones[i].Name, savedBoneFile.DummyBones[i].Name, "Dummy bone names do not match");
-                Assert.AreEqual(boneFile.DummyBones[i].Parent, savedBoneFile.DummyBones[i].Parent, "Dummy bone parents do not match");
-                Assert.AreEqual(boneFile.DummyBones[i].Translation, savedBoneFile.DummyBones[i].Translation, "Dummy bone positions do not match");
-                Assert.AreEqual(boneFile.DummyBones[i].Rotation, savedBoneFile.DummyBones[i].Rotation, "Dummy bone rotations do not match");
+                Assert.That(boneFile.DummyBones[i].Name.Equals(savedBoneFile.DummyBones[i].Name), "Dummy bone names do not match");
+                Assert.That(boneFile.DummyBones[i].Parent.Equals(savedBoneFile.DummyBones[i].Parent), "Dummy bone parents do not match");
+                Assert.That(boneFile.DummyBones[i].Translation.Equals(savedBoneFile.DummyBones[i].Translation), "Dummy bone positions do not match");
+                Assert.That(boneFile.DummyBones[i].Rotation.Equals(savedBoneFile.DummyBones[i].Rotation), "Dummy bone rotations do not match");
             }
         }
     }

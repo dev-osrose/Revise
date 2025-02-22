@@ -23,15 +23,15 @@ using System.IO;
 using NUnit.Framework;
 using Revise.ZMS;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="ModelFile"/> class.
     /// </summary>
     [TestFixture]
     public class ModelFileTests {
-        private const string TEST_FILE1 = "Tests/Files/CART01_ABILITY01.ZMS";
-        private const string TEST_FILE2 = "Tests/Files/HEADBAD01.ZMS";
-        private const string TEST_FILE3 = "Tests/Files/STONE014.ZMS";
+        private const string TestFile1 = "Tests/Files/CART01_ABILITY01.ZMS";
+        private const string TestFile2 = "Tests/Files/HEADBAD01.ZMS";
+        private const string TestFile3 = "Tests/Files/STONE014.ZMS";
 
         /// <summary>
         /// Tests the load method.
@@ -49,7 +49,7 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
         }
 
         /// <summary>
@@ -69,75 +69,75 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(modelFile.Pool, savedModelFile.Pool, "Pool values do not match");
-            Assert.AreEqual(modelFile.BoneTable.Count, savedModelFile.BoneTable.Count, "Bone table counts do not match");
+            Assert.That(modelFile.Pool.Equals(savedModelFile.Pool), "Pool values do not match");
+            Assert.That(modelFile.BoneTable.Count.Equals(savedModelFile.BoneTable.Count), "Bone table counts do not match");
 
             for (int i = 0; i < modelFile.BoneTable.Count; i++) {
-                Assert.AreEqual(modelFile.BoneTable[i], savedModelFile.BoneTable[i], "Bone table values do not match");
+                Assert.That(modelFile.BoneTable[i].Equals(savedModelFile.BoneTable[i]), "Bone table values do not match");
             }
 
-            Assert.AreEqual(modelFile.Vertices.Count, savedModelFile.Vertices.Count, "Vertex counts do not match");
+            Assert.That(modelFile.Vertices.Count.Equals(savedModelFile.Vertices.Count), "Vertex counts do not match");
 
             for (int i = 0; i < modelFile.Vertices.Count; i++) {
-                Assert.AreEqual(modelFile.Vertices[i].Position, savedModelFile.Vertices[i].Position, "Vertex position values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].Normal, savedModelFile.Vertices[i].Normal, "Vertex normal values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].Colour, savedModelFile.Vertices[i].Colour, "Vertex colour values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].BoneWeights, savedModelFile.Vertices[i].BoneWeights, "Vertex bone weight values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].BoneIndices, savedModelFile.Vertices[i].BoneIndices, "Vertex bone index values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].TextureCoordinates[0], savedModelFile.Vertices[i].TextureCoordinates[0], "Vertex texture coordinate values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].TextureCoordinates[1], savedModelFile.Vertices[i].TextureCoordinates[1], "Vertex texture coordinate values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].TextureCoordinates[2], savedModelFile.Vertices[i].TextureCoordinates[2], "Vertex texture coordinate values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].TextureCoordinates[3], savedModelFile.Vertices[i].TextureCoordinates[3], "Vertex texture coordinate values do not match");
-                Assert.AreEqual(modelFile.Vertices[i].Tangent, savedModelFile.Vertices[i].Tangent, "Vertex tangent values do not match");
+                Assert.That(modelFile.Vertices[i].Position.Equals(savedModelFile.Vertices[i].Position), "Vertex position values do not match");
+                Assert.That(modelFile.Vertices[i].Normal.Equals(savedModelFile.Vertices[i].Normal), "Vertex normal values do not match");
+                Assert.That(modelFile.Vertices[i].Colour.Equals(savedModelFile.Vertices[i].Colour), "Vertex colour values do not match");
+                Assert.That(modelFile.Vertices[i].BoneWeights.Equals(savedModelFile.Vertices[i].BoneWeights), "Vertex bone weight values do not match");
+                Assert.That(modelFile.Vertices[i].BoneIndices.Equals(savedModelFile.Vertices[i].BoneIndices), "Vertex bone index values do not match");
+                Assert.That(modelFile.Vertices[i].TextureCoordinates[0].Equals(savedModelFile.Vertices[i].TextureCoordinates[0]), "Vertex texture coordinate values do not match");
+                Assert.That(modelFile.Vertices[i].TextureCoordinates[1].Equals(savedModelFile.Vertices[i].TextureCoordinates[1]), "Vertex texture coordinate values do not match");
+                Assert.That(modelFile.Vertices[i].TextureCoordinates[2].Equals(savedModelFile.Vertices[i].TextureCoordinates[2]), "Vertex texture coordinate values do not match");
+                Assert.That(modelFile.Vertices[i].TextureCoordinates[3].Equals(savedModelFile.Vertices[i].TextureCoordinates[3]), "Vertex texture coordinate values do not match");
+                Assert.That(modelFile.Vertices[i].Tangent.Equals(savedModelFile.Vertices[i].Tangent), "Vertex tangent values do not match");
             }
 
-            Assert.AreEqual(modelFile.Indices.Count, savedModelFile.Indices.Count, "Index counts do not match");
+            Assert.That(modelFile.Indices.Count.Equals(savedModelFile.Indices.Count), "Index counts do not match");
 
             for (int i = 0; i < modelFile.Indices.Count; i++) {
-                Assert.AreEqual(modelFile.Indices[i], savedModelFile.Indices[i], "Index values do not match");
+                Assert.That(modelFile.Indices[i].Equals(savedModelFile.Indices[i]), "Index values do not match");
             }
 
-            Assert.AreEqual(modelFile.Materials.Count, savedModelFile.Materials.Count, "Material counts do not match");
+            Assert.That(modelFile.Materials.Count.Equals(savedModelFile.Materials.Count), "Material counts do not match");
 
             for (int i = 0; i < modelFile.Materials.Count; i++) {
-                Assert.AreEqual(modelFile.Materials[i], savedModelFile.Materials[i], "Material values do not match");
+                Assert.That(modelFile.Materials[i].Equals(savedModelFile.Materials[i]), "Material values do not match");
             }
 
-            Assert.AreEqual(modelFile.Strips.Count, savedModelFile.Strips.Count, "Strip counts do not match");
+            Assert.That(modelFile.Strips.Count.Equals(savedModelFile.Strips.Count), "Strip counts do not match");
 
             for (int i = 0; i < modelFile.Strips.Count; i++) {
-                Assert.AreEqual(modelFile.Strips[i], savedModelFile.Strips[i], "Strip values do not match");
+                Assert.That(modelFile.Strips[i].Equals(savedModelFile.Strips[i]), "Strip values do not match");
             }
         }
 
         [Test]
         public void TestLoadMethod1() {
-            TestLoadMethod(TEST_FILE1);
+            TestLoadMethod(TestFile1);
         }
 
         [Test]
         public void TestLoadMethod2() {
-            TestLoadMethod(TEST_FILE2);
+            TestLoadMethod(TestFile2);
         }
 
         [Test]
         public void TestLoadMethod3() {
-            TestLoadMethod(TEST_FILE3);
+            TestLoadMethod(TestFile3);
         }
 
         [Test]
         public void TestSaveMethod1() {
-            TestSaveMethod(TEST_FILE1);
+            TestSaveMethod(TestFile1);
         }
 
         [Test]
         public void TestSaveMethod2() {
-            TestSaveMethod(TEST_FILE2);
+            TestSaveMethod(TestFile2);
         }
 
         [Test]
         public void TestSaveMethod3() {
-            TestSaveMethod(TEST_FILE3);
+            TestSaveMethod(TestFile3);
         }
     }
 }

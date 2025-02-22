@@ -23,13 +23,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.LOD;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="LevelOfDetailFile"/> class.
     /// </summary>
     [TestFixture]
     public class LevelOfDetailFileTests {
-        private const string TEST_FILE = "Tests/Files/PATCHTYPE.LOD";
+        private const string TestFile = "Tests/Files/PATCHTYPE.LOD";
 
         /// <summary>
         /// Tests the load method.
@@ -38,7 +38,7 @@ namespace Revise.Tests {
         public void TestLoadMethod() {
             const string NAME = "block_height";
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -50,8 +50,8 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(NAME, levelOfDetailFile.Name, "Incorrect name");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(NAME.Equals(levelOfDetailFile.Name), "Incorrect name");
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             LevelOfDetailFile levelOfDetailFile = new LevelOfDetailFile();
-            levelOfDetailFile.Load(TEST_FILE);
+            levelOfDetailFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             levelOfDetailFile.Save(savedStream);
@@ -72,11 +72,11 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(levelOfDetailFile.Name, savedLevelOfDetailFile.Name, "Names do not match");
+            Assert.That(levelOfDetailFile.Name.Equals(savedLevelOfDetailFile.Name), "Names do not match");
 
             for (int x = 0; x < levelOfDetailFile.Height; x++) {
                 for (int y = 0; y < levelOfDetailFile.Width; y++) {
-                    Assert.AreEqual(levelOfDetailFile[x, y], savedLevelOfDetailFile[x, y], "Values do not match");
+                    Assert.That(levelOfDetailFile[x, y].Equals(savedLevelOfDetailFile[x, y]), "Values do not match");
                 }
             }
         }

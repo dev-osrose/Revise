@@ -23,13 +23,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.HIM;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="HeightmapFile"/> class.
     /// </summary>
     [TestFixture]
     public class HeightmapFileTests {
-        private const string TEST_FILE = "Tests/Files/31_30.HIM";
+        private const string TestFile = "Tests/Files/31_30.HIM";
 
         /// <summary>
         /// Tests the load method.
@@ -39,7 +39,7 @@ namespace Revise.Tests {
             const int HEIGHT = 65;
             const int WIDTH = 65;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -51,9 +51,9 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(WIDTH, heightmapFile.Width, "Incorrect width");
-            Assert.AreEqual(HEIGHT, heightmapFile.Height, "Incorrect height");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(WIDTH.Equals(heightmapFile.Width), "Incorrect width");
+            Assert.That(HEIGHT.Equals(heightmapFile.Height), "Incorrect height");
         }
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             HeightmapFile heightmapFile = new HeightmapFile();
-            heightmapFile.Load(TEST_FILE);
+            heightmapFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             heightmapFile.Save(savedStream);
-            heightmapFile.Load(TEST_FILE);
+            heightmapFile.Load(TestFile);
 
             savedStream.Seek(0, SeekOrigin.Begin);
 
@@ -77,20 +77,20 @@ namespace Revise.Tests {
 
             for (int x = 0; x < heightmapFile.Height; x++) {
                 for (int y = 0; y < heightmapFile.Width; y++) {
-                    Assert.AreEqual(heightmapFile[x, y], savedHeightmapFile[x, y], "Height values do not match");
+                    Assert.That(heightmapFile[x, y].Equals(savedHeightmapFile[x, y]), "Height values do not match");
                 }
             }
 
             for (int x = 0; x < heightmapFile.Patches.GetLength(0); x++) {
                 for (int y = 0; y < heightmapFile.Patches.GetLength(1); y++) {
-                    Assert.AreEqual(heightmapFile.Patches[x, y].Minimum, savedHeightmapFile.Patches[x, y].Minimum, "Minimum patch values do not match");
-                    Assert.AreEqual(heightmapFile.Patches[x, y].Maximum, savedHeightmapFile.Patches[x, y].Maximum, "Maximum patch values do not match");
+                    Assert.That(heightmapFile.Patches[x, y].Minimum.Equals(savedHeightmapFile.Patches[x, y].Minimum), "Minimum patch values do not match");
+                    Assert.That(heightmapFile.Patches[x, y].Maximum.Equals(savedHeightmapFile.Patches[x, y].Maximum), "Maximum patch values do not match");
                 }
             }
 
             for (int i = 0; i < heightmapFile.QuadPatches.Length; i++) {
-                Assert.AreEqual(heightmapFile.QuadPatches[i].Minimum, savedHeightmapFile.QuadPatches[i].Minimum, "Minimum quad patch values do not match");
-                Assert.AreEqual(heightmapFile.QuadPatches[i].Maximum, savedHeightmapFile.QuadPatches[i].Maximum, "Maximum quad patch values do not match");
+                Assert.That(heightmapFile.QuadPatches[i].Minimum.Equals(savedHeightmapFile.QuadPatches[i].Minimum), "Minimum quad patch values do not match");
+                Assert.That(heightmapFile.QuadPatches[i].Maximum.Equals(savedHeightmapFile.QuadPatches[i].Maximum), "Maximum quad patch values do not match");
             }
         }
     }

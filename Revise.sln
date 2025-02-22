@@ -17,20 +17,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Debug|x86.ActiveCfg = Debug|x86
-		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Debug|x86.Build.0 = Debug|x86
 		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Release|x86.ActiveCfg = Release|x86
-		{24AC4DAD-4179-4DB6-9457-4250429ED2C1}.Release|x86.Build.0 = Release|x86
 		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Debug|x86.ActiveCfg = Debug|x86
-		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Debug|x86.Build.0 = Debug|x86
 		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Release|x86.ActiveCfg = Release|x86
-		{7AFBDBCF-CA04-434C-B492-15B16DA05306}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

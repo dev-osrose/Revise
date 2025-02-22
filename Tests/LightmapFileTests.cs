@@ -23,13 +23,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.LIT;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="LightmapFile"/> class.
     /// </summary>
     [TestFixture]
     public class LightmapFileTests {
-        private const string TEST_FILE = "Tests/Files/OBJECTLIGHTMAPDATA.LIT";
+        private const string TestFile = "Tests/Files/OBJECTLIGHTMAPDATA.LIT";
 
         /// <summary>
         /// Tests the load method.
@@ -38,7 +38,7 @@ namespace Revise.Tests {
         public void TestLoadMethod() {
             const int OBJECT_COUNT = 266;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -50,8 +50,8 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(OBJECT_COUNT, lightmapFile.Objects.Count, "Incorrect object count");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(OBJECT_COUNT.Equals(lightmapFile.Objects.Count), "Incorrect object count");
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             LightmapFile lightmapFile = new LightmapFile();
-            lightmapFile.Load(TEST_FILE);
+            lightmapFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             lightmapFile.Save(savedStream);
@@ -72,26 +72,26 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(lightmapFile.Objects.Count, savedLightmapFile.Objects.Count, "Object counts do not match");
+            Assert.That(lightmapFile.Objects.Count.Equals(savedLightmapFile.Objects.Count), "Object counts do not match");
 
             for (int i = 0; i < lightmapFile.Objects.Count; i++) {
-                Assert.AreEqual(lightmapFile.Objects[i].ID, savedLightmapFile.Objects[i].ID, "Object IDs do not match");
-                Assert.AreEqual(lightmapFile.Objects[i].Parts.Count, savedLightmapFile.Objects[i].Parts.Count, "Part counts do not match");
+                Assert.That(lightmapFile.Objects[i].ID.Equals(savedLightmapFile.Objects[i].ID), "Object IDs do not match");
+                Assert.That(lightmapFile.Objects[i].Parts.Count.Equals(savedLightmapFile.Objects[i].Parts.Count), "Part counts do not match");
 
                 for (int j = 0; j < lightmapFile.Objects[i].Parts.Count; j++) {
-                    Assert.AreEqual(lightmapFile.Objects[i].Parts[j].Name, savedLightmapFile.Objects[i].Parts[j].Name, "Part names do not match");
-                    Assert.AreEqual(lightmapFile.Objects[i].Parts[j].ID, savedLightmapFile.Objects[i].Parts[j].ID, "Part IDs do not match");
-                    Assert.AreEqual(lightmapFile.Objects[i].Parts[j].FileName, savedLightmapFile.Objects[i].Parts[j].FileName, "Part file names do not match");
-                    Assert.AreEqual(lightmapFile.Objects[i].Parts[j].PixelsPerObject, savedLightmapFile.Objects[i].Parts[j].PixelsPerObject, "Part pixel per object values do not match");
-                    Assert.AreEqual(lightmapFile.Objects[i].Parts[j].ObjectsPerWidth, savedLightmapFile.Objects[i].Parts[j].ObjectsPerWidth, "Part objects per width values do not match");
-                    Assert.AreEqual(lightmapFile.Objects[i].Parts[j].ObjectPosition, savedLightmapFile.Objects[i].Parts[j].ObjectPosition, "Part position values do not match");
+                    Assert.That(lightmapFile.Objects[i].Parts[j].Name.Equals(savedLightmapFile.Objects[i].Parts[j].Name), "Part names do not match");
+                    Assert.That(lightmapFile.Objects[i].Parts[j].ID.Equals(savedLightmapFile.Objects[i].Parts[j].ID), "Part IDs do not match");
+                    Assert.That(lightmapFile.Objects[i].Parts[j].FileName.Equals(savedLightmapFile.Objects[i].Parts[j].FileName), "Part file names do not match");
+                    Assert.That(lightmapFile.Objects[i].Parts[j].PixelsPerObject.Equals(savedLightmapFile.Objects[i].Parts[j].PixelsPerObject), "Part pixel per object values do not match");
+                    Assert.That(lightmapFile.Objects[i].Parts[j].ObjectsPerWidth.Equals(savedLightmapFile.Objects[i].Parts[j].ObjectsPerWidth), "Part objects per width values do not match");
+                    Assert.That(lightmapFile.Objects[i].Parts[j].ObjectPosition.Equals(savedLightmapFile.Objects[i].Parts[j].ObjectPosition), "Part position values do not match");
                 }
             }
 
-            Assert.AreEqual(lightmapFile.Files.Count, savedLightmapFile.Files.Count, "File counts do not match");
+            Assert.That(lightmapFile.Files.Count.Equals(savedLightmapFile.Files.Count), "File counts do not match");
 
             for (int i = 0; i < lightmapFile.Files.Count; i++) {
-                Assert.AreEqual(lightmapFile.Files[i], savedLightmapFile.Files[i], "File names do not match");
+                Assert.That(lightmapFile.Files[i].Equals(savedLightmapFile.Files[i]), "File names do not match");
             }
         }
     }

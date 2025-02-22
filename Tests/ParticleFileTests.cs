@@ -23,21 +23,21 @@ using NUnit.Framework;
 using Revise.PTL;
 using System.IO;
 
-namespace Revise.Tests
+namespace Revise.Files.Tests
 {
     /// <summary>
     /// Provides testing for the <see cref="ParticleFile"/> class.
     /// </summary>
     [TestFixture]
     public class ParticleFileTests {
-        private const string TEST_FILE = "Tests/Files/LEVELUP_01.PTL";
+        private const string TestFile = "Tests/Files/LEVELUP_01.PTL";
 
         /// <summary>
         /// Tests the load method.
         /// </summary>
         [Test]
         public void TestLoadMethod() {
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -49,7 +49,7 @@ namespace Revise.Tests
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Revise.Tests
         [Test]
         public void TestSaveMethod() {
             ParticleFile particleFile = new ParticleFile();
-            particleFile.Load(TEST_FILE);
+            particleFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             particleFile.Save(savedStream);
@@ -70,39 +70,39 @@ namespace Revise.Tests
 
             savedStream.Close();
 
-            Assert.AreEqual(particleFile.Sequences.Count, savedParticleFile.Sequences.Count, "Sequence counts do not match");
+            Assert.That(particleFile.Sequences.Count.Equals(savedParticleFile.Sequences.Count), "Sequence counts do not match");
 
             for (int i = 0; i < particleFile.Sequences.Count; i++) {
-                Assert.AreEqual(particleFile.Sequences[i].Name, savedParticleFile.Sequences[i].Name, "Sequence name values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].Lifetime.Minimum, savedParticleFile.Sequences[i].Lifetime.Minimum, "Sequence minimum lifetime values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].Lifetime.Maximum, savedParticleFile.Sequences[i].Lifetime.Maximum, "Sequence maximum lifetime values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].EmitRate.Minimum, savedParticleFile.Sequences[i].EmitRate.Minimum, "Sequence minimum emit rate values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].EmitRate.Maximum, savedParticleFile.Sequences[i].EmitRate.Maximum, "Sequence maximum emit rate values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].LoopCount, savedParticleFile.Sequences[i].LoopCount, "Sequence loop count values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].SpawnDirection.Minimum, savedParticleFile.Sequences[i].SpawnDirection.Minimum, "Sequence minimum spawn direction values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].SpawnDirection.Maximum, savedParticleFile.Sequences[i].SpawnDirection.Maximum, "Sequence maximum spawn direction values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].EmitRadius.Minimum, savedParticleFile.Sequences[i].EmitRadius.Minimum, "Sequence minimum emit radius values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].EmitRadius.Maximum, savedParticleFile.Sequences[i].EmitRadius.Maximum, "Sequence maximum emit radius values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].Gravity.Minimum, savedParticleFile.Sequences[i].Gravity.Minimum, "Sequence minimum gravity values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].Gravity.Maximum, savedParticleFile.Sequences[i].Gravity.Maximum, "Sequence maximum gravity values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].TextureFileName, savedParticleFile.Sequences[i].TextureFileName, "Sequence texture file names do not match");
-                Assert.AreEqual(particleFile.Sequences[i].ParticleCount, savedParticleFile.Sequences[i].ParticleCount, "Sequence particle counts do not match");
-                Assert.AreEqual(particleFile.Sequences[i].Alignment, savedParticleFile.Sequences[i].Alignment, "Sequence alignment values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].UpdateCoordinate, savedParticleFile.Sequences[i].UpdateCoordinate, "Sequence update coordinate values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].TextureWidth, savedParticleFile.Sequences[i].TextureWidth, "Sequence texture width values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].TextureHeight, savedParticleFile.Sequences[i].TextureHeight, "Sequence texture height values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].Implementation, savedParticleFile.Sequences[i].Implementation, "Sequence implementation values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].DestinationBlendMode, savedParticleFile.Sequences[i].DestinationBlendMode, "Sequence destination blend mode values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].SourceBlendMode, savedParticleFile.Sequences[i].SourceBlendMode, "Sequence source blend mode values do not match");
-                Assert.AreEqual(particleFile.Sequences[i].BlendOperation, savedParticleFile.Sequences[i].BlendOperation, "Sequence blend operation values do not match");
+                Assert.That(particleFile.Sequences[i].Name.Equals(savedParticleFile.Sequences[i].Name), "Sequence name values do not match");
+                Assert.That(particleFile.Sequences[i].Lifetime.Minimum.Equals(savedParticleFile.Sequences[i].Lifetime.Minimum), "Sequence minimum lifetime values do not match");
+                Assert.That(particleFile.Sequences[i].Lifetime.Maximum.Equals(savedParticleFile.Sequences[i].Lifetime.Maximum), "Sequence maximum lifetime values do not match");
+                Assert.That(particleFile.Sequences[i].EmitRate.Minimum.Equals(savedParticleFile.Sequences[i].EmitRate.Minimum), "Sequence minimum emit rate values do not match");
+                Assert.That(particleFile.Sequences[i].EmitRate.Maximum.Equals(savedParticleFile.Sequences[i].EmitRate.Maximum), "Sequence maximum emit rate values do not match");
+                Assert.That(particleFile.Sequences[i].LoopCount.Equals(savedParticleFile.Sequences[i].LoopCount), "Sequence loop count values do not match");
+                Assert.That(particleFile.Sequences[i].SpawnDirection.Minimum.Equals(savedParticleFile.Sequences[i].SpawnDirection.Minimum), "Sequence minimum spawn direction values do not match");
+                Assert.That(particleFile.Sequences[i].SpawnDirection.Maximum.Equals(savedParticleFile.Sequences[i].SpawnDirection.Maximum), "Sequence maximum spawn direction values do not match");
+                Assert.That(particleFile.Sequences[i].EmitRadius.Minimum.Equals(savedParticleFile.Sequences[i].EmitRadius.Minimum), "Sequence minimum emit radius values do not match");
+                Assert.That(particleFile.Sequences[i].EmitRadius.Maximum.Equals(savedParticleFile.Sequences[i].EmitRadius.Maximum), "Sequence maximum emit radius values do not match");
+                Assert.That(particleFile.Sequences[i].Gravity.Minimum.Equals(savedParticleFile.Sequences[i].Gravity.Minimum), "Sequence minimum gravity values do not match");
+                Assert.That(particleFile.Sequences[i].Gravity.Maximum.Equals(savedParticleFile.Sequences[i].Gravity.Maximum), "Sequence maximum gravity values do not match");
+                Assert.That(particleFile.Sequences[i].TextureFileName.Equals(savedParticleFile.Sequences[i].TextureFileName), "Sequence texture file names do not match");
+                Assert.That(particleFile.Sequences[i].ParticleCount.Equals(savedParticleFile.Sequences[i].ParticleCount), "Sequence particle counts do not match");
+                Assert.That(particleFile.Sequences[i].Alignment.Equals(savedParticleFile.Sequences[i].Alignment), "Sequence alignment values do not match");
+                Assert.That(particleFile.Sequences[i].UpdateCoordinate.Equals(savedParticleFile.Sequences[i].UpdateCoordinate), "Sequence update coordinate values do not match");
+                Assert.That(particleFile.Sequences[i].TextureWidth.Equals(savedParticleFile.Sequences[i].TextureWidth), "Sequence texture width values do not match");
+                Assert.That(particleFile.Sequences[i].TextureHeight.Equals(savedParticleFile.Sequences[i].TextureHeight), "Sequence texture height values do not match");
+                Assert.That(particleFile.Sequences[i].Implementation.Equals(savedParticleFile.Sequences[i].Implementation), "Sequence implementation values do not match");
+                Assert.That(particleFile.Sequences[i].DestinationBlendMode.Equals(savedParticleFile.Sequences[i].DestinationBlendMode), "Sequence destination blend mode values do not match");
+                Assert.That(particleFile.Sequences[i].SourceBlendMode.Equals(savedParticleFile.Sequences[i].SourceBlendMode), "Sequence source blend mode values do not match");
+                Assert.That(particleFile.Sequences[i].BlendOperation.Equals(savedParticleFile.Sequences[i].BlendOperation), "Sequence blend operation values do not match");
 
-                Assert.AreEqual(particleFile.Sequences[i].Events.Count, savedParticleFile.Sequences[i].Events.Count, "Event counts do not match");
+                Assert.That(particleFile.Sequences[i].Events.Count.Equals(savedParticleFile.Sequences[i].Events.Count), "Event counts do not match");
 
                 for (int j = 0; j < particleFile.Sequences[i].Events.Count; j++) {
-                    Assert.AreEqual(particleFile.Sequences[i].Events[j].Type, savedParticleFile.Sequences[i].Events[j].Type, "Event type values do not match");
-                    Assert.AreEqual(particleFile.Sequences[i].Events[j].Fade, savedParticleFile.Sequences[i].Events[j].Fade, "Event fade values do not match");
-                    Assert.AreEqual(particleFile.Sequences[i].Events[j].TimeRange.Minimum, savedParticleFile.Sequences[i].Events[j].TimeRange.Minimum, "Event minimum time range values do not match");
-                    Assert.AreEqual(particleFile.Sequences[i].Events[j].TimeRange.Maximum, savedParticleFile.Sequences[i].Events[j].TimeRange.Maximum, "Event maximum time range values do not match");
+                    Assert.That(particleFile.Sequences[i].Events[j].Type.Equals(savedParticleFile.Sequences[i].Events[j].Type), "Event type values do not match");
+                    Assert.That(particleFile.Sequences[i].Events[j].Fade.Equals(savedParticleFile.Sequences[i].Events[j].Fade), "Event fade values do not match");
+                    Assert.That(particleFile.Sequences[i].Events[j].TimeRange.Minimum.Equals(savedParticleFile.Sequences[i].Events[j].TimeRange.Minimum), "Event minimum time range values do not match");
+                    Assert.That(particleFile.Sequences[i].Events[j].TimeRange.Maximum.Equals(savedParticleFile.Sequences[i].Events[j].TimeRange.Maximum), "Event maximum time range values do not match");
                 }
             }
         }

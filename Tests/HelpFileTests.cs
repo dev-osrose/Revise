@@ -23,13 +23,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.HLP;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="HelpFile"/> class.
     /// </summary>
     [TestFixture]
     public class HelpFileTests {
-        private const string TEST_FILE = "Tests/Files/HELP.HLP";
+        private const string TestFile = "Tests/Files/HELP.HLP";
 
         /// <summary>
         /// Tests the load method.
@@ -38,7 +38,7 @@ namespace Revise.Tests {
         public void TestLoadMethod() {
             const int PAGE_COUNT = 69;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -50,8 +50,8 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(PAGE_COUNT, hlp.Pages.Count, "Incorrect page count");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(PAGE_COUNT.Equals(hlp.Pages.Count), "Incorrect page count");
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             HelpFile helpFile = new HelpFile();
-            helpFile.Load(TEST_FILE);
+            helpFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             helpFile.Save(savedStream);
@@ -72,13 +72,13 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(helpFile.Pages.Count, savedHelpFile.Pages.Count, "Page counts do not match");
+            Assert.That(helpFile.Pages.Count.Equals(savedHelpFile.Pages.Count), "Page counts do not match");
 
             TestNodes(helpFile.RootNode, savedHelpFile.RootNode);
 
             for (int i = 0; i < helpFile.Pages.Count; i++) {
-                Assert.AreEqual(helpFile.Pages[i].Title, savedHelpFile.Pages[i].Title, "Page title values do not match");
-                Assert.AreEqual(helpFile.Pages[i].Content, savedHelpFile.Pages[i].Content, "Page content values do not match");
+                Assert.That(helpFile.Pages[i].Title.Equals(savedHelpFile.Pages[i].Title), "Page title values do not match");
+                Assert.That(helpFile.Pages[i].Content.Equals(savedHelpFile.Pages[i].Content), "Page content values do not match");
             }
         }
 
@@ -88,8 +88,8 @@ namespace Revise.Tests {
         /// <param name="nodeA">The first node.</param>
         /// <param name="nodeB">The second node.</param>
         private void TestNodes(HelpNode nodeA, HelpNode nodeB) {
-            Assert.AreEqual(nodeA.Name, nodeB.Name, "Node name values do not match");
-            Assert.AreEqual(nodeA.Children.Count, nodeB.Children.Count, "Child counts do not match");
+            Assert.That(nodeA.Name.Equals(nodeB.Name), "Node name values do not match");
+            Assert.That(nodeA.Children.Count.Equals(nodeB.Children.Count), "Child counts do not match");
 
             for (int i = 0; i < nodeA.Children.Count; i++) {
                 TestNodes(nodeA.Children[i], nodeA.Children[i]);
