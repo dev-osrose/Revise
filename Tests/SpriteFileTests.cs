@@ -23,13 +23,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.TSI;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="SpriteFile"/> class.
     /// </summary>
     [TestFixture]
     public class SpriteFileTests {
-        private const string TEST_FILE = "Tests/Files/UI.TSI";
+        private const string TestFile = "Tests/Files/UI.TSI";
 
         /// <summary>
         /// Tests the load method.
@@ -39,7 +39,7 @@ namespace Revise.Tests {
             const int TEXTURE_COUNT = 38;
             const int SPRITE_COUNT = 648;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -51,9 +51,9 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(TEXTURE_COUNT, spriteFile.Textures.Count, "Incorrect texture count");
-            Assert.AreEqual(SPRITE_COUNT, spriteFile.Sprites.Count, "Incorrect sprite count");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(TEXTURE_COUNT.Equals(spriteFile.Textures.Count), "Incorrect texture count");
+            Assert.That(SPRITE_COUNT.Equals(spriteFile.Sprites.Count), "Incorrect sprite count");
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             SpriteFile spriteFile = new SpriteFile();
-            spriteFile.Load(TEST_FILE);
+            spriteFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             spriteFile.Save(savedStream);
@@ -74,21 +74,21 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(spriteFile.Textures.Count, savedSpriteFile.Textures.Count, "Texture counts do not match");
-            Assert.AreEqual(spriteFile.Sprites.Count, savedSpriteFile.Sprites.Count, "Sprite counts do not match");
+            Assert.That(spriteFile.Textures.Count.Equals(savedSpriteFile.Textures.Count), "Texture counts do not match");
+            Assert.That(spriteFile.Sprites.Count.Equals(savedSpriteFile.Sprites.Count), "Sprite counts do not match");
 
             for (int i = 0; i < spriteFile.Textures.Count; i++) {
-                Assert.AreEqual(spriteFile.Textures[i].FileName, savedSpriteFile.Textures[i].FileName, "Texture file names values do not match");
-                Assert.AreEqual(spriteFile.Textures[i].ColourKey, savedSpriteFile.Textures[i].ColourKey, "Texture colour key values do not match");
+                Assert.That(spriteFile.Textures[i].FileName.Equals(savedSpriteFile.Textures[i].FileName), "Texture file names values do not match");
+                Assert.That(spriteFile.Textures[i].ColourKey.Equals(savedSpriteFile.Textures[i].ColourKey), "Texture colour key values do not match");
             }
 
             for (int i = 0; i < spriteFile.Sprites.Count; i++) {
-                Assert.AreEqual(spriteFile.Sprites[i].Texture, savedSpriteFile.Sprites[i].Texture, "Sprite texture values do not match");
-                Assert.AreEqual(spriteFile.Sprites[i].X1, savedSpriteFile.Sprites[i].X1, "Sprite X1 values do not match");
-                Assert.AreEqual(spriteFile.Sprites[i].Y1, savedSpriteFile.Sprites[i].Y1, "Sprite Y1 values do not match");
-                Assert.AreEqual(spriteFile.Sprites[i].X2, savedSpriteFile.Sprites[i].X2, "Sprite X2 values do not match");
-                Assert.AreEqual(spriteFile.Sprites[i].Y2, savedSpriteFile.Sprites[i].Y2, "Sprite Y2 values do not match");
-                Assert.AreEqual(spriteFile.Sprites[i].ID, savedSpriteFile.Sprites[i].ID, "Sprite ID values do not match");
+                Assert.That(spriteFile.Sprites[i].Texture.Equals(savedSpriteFile.Sprites[i].Texture), "Sprite texture values do not match");
+                Assert.That(spriteFile.Sprites[i].X1.Equals(savedSpriteFile.Sprites[i].X1), "Sprite X1 values do not match");
+                Assert.That(spriteFile.Sprites[i].Y1.Equals(savedSpriteFile.Sprites[i].Y1), "Sprite Y1 values do not match");
+                Assert.That(spriteFile.Sprites[i].X2.Equals(savedSpriteFile.Sprites[i].X2), "Sprite X2 values do not match");
+                Assert.That(spriteFile.Sprites[i].Y2.Equals(savedSpriteFile.Sprites[i].Y2), "Sprite Y2 values do not match");
+                Assert.That(spriteFile.Sprites[i].ID.Equals(savedSpriteFile.Sprites[i].ID), "Sprite ID values do not match");
             }
         }
     }

@@ -23,20 +23,20 @@ using System.IO;
 using NUnit.Framework;
 using Revise.AIP;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="ArtificialIntelligenceFile"/> class.
     /// </summary>
     [TestFixture]
     public class ArtificialIntelligenceFileTests {
-        private const string TEST_FILE = "Tests/Files/CLAN_BOSS1.AIP";
+        private const string TestFile = "Tests/Files/CLAN_BOSS1.AIP";
 
         /// <summary>
         /// Tests the load method.
         /// </summary>
         [Test]
         public void TestLoadMethod() {
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -48,7 +48,7 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             ArtificialIntelligenceFile artificialIntelligenceFile = new ArtificialIntelligenceFile();
-            artificialIntelligenceFile.Load(TEST_FILE);
+            artificialIntelligenceFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             artificialIntelligenceFile.Save(savedStream);
@@ -69,29 +69,29 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(artificialIntelligenceFile.Name, savedArtificialIntelligenceFile.Name, "Names do not match");
-            Assert.AreEqual(artificialIntelligenceFile.IdleInterval, savedArtificialIntelligenceFile.IdleInterval, "Idle interval values do not match");
-            Assert.AreEqual(artificialIntelligenceFile.DamageRate, savedArtificialIntelligenceFile.DamageRate, "Damage rate values do not match");
+            Assert.That(artificialIntelligenceFile.Name.Equals(savedArtificialIntelligenceFile.Name), "Names do not match");
+            Assert.That(artificialIntelligenceFile.IdleInterval.Equals(savedArtificialIntelligenceFile.IdleInterval), "Idle interval values do not match");
+            Assert.That(artificialIntelligenceFile.DamageRate.Equals(savedArtificialIntelligenceFile.DamageRate), "Damage rate values do not match");
 
-            Assert.AreEqual(artificialIntelligenceFile.Patterns.Count, savedArtificialIntelligenceFile.Patterns.Count, "Pattern counts do not match");
+            Assert.That(artificialIntelligenceFile.Patterns.Count.Equals(savedArtificialIntelligenceFile.Patterns.Count), "Pattern counts do not match");
 
             for (int i = 0; i < artificialIntelligenceFile.Patterns.Count; i++) {
-                Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Name, savedArtificialIntelligenceFile.Patterns[i].Name, "Pattern names do not match");
+                Assert.That(artificialIntelligenceFile.Patterns[i].Name.Equals(savedArtificialIntelligenceFile.Patterns[i].Name), "Pattern names do not match");
 
-                Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Events.Count, savedArtificialIntelligenceFile.Patterns[i].Events.Count, "Event counts do not match");
+                Assert.That(artificialIntelligenceFile.Patterns[i].Events.Count.Equals(savedArtificialIntelligenceFile.Patterns[i].Events.Count), "Event counts do not match");
 
                 for (int j = 0; j < artificialIntelligenceFile.Patterns[i].Events.Count; j++) {
-                    Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Events[j].Name, savedArtificialIntelligenceFile.Patterns[i].Events[j].Name, "Event names do not match");
+                    Assert.That(artificialIntelligenceFile.Patterns[i].Events[j].Name.Equals(savedArtificialIntelligenceFile.Patterns[i].Events[j].Name), "Event names do not match");
 
-                    Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Events[j].Conditions.Count, savedArtificialIntelligenceFile.Patterns[i].Events[j].Conditions.Count, "Condition counts do not match");
-                    Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Events[j].Actions.Count, savedArtificialIntelligenceFile.Patterns[i].Events[j].Actions.Count, "Action counts do not match");
+                    Assert.That(artificialIntelligenceFile.Patterns[i].Events[j].Conditions.Count.Equals(savedArtificialIntelligenceFile.Patterns[i].Events[j].Conditions.Count), "Condition counts do not match");
+                    Assert.That(artificialIntelligenceFile.Patterns[i].Events[j].Actions.Count.Equals(savedArtificialIntelligenceFile.Patterns[i].Events[j].Actions.Count), "Action counts do not match");
 
                     for (int k = 0; k < artificialIntelligenceFile.Patterns[i].Events[j].Conditions.Count; k++) {
-                        Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Events[j].Conditions[k].GetType(), artificialIntelligenceFile.Patterns[i].Events[j].Conditions[k].GetType(), "Condition types do not match");
+                        Assert.That(artificialIntelligenceFile.Patterns[i].Events[j].Conditions[k].GetType().Equals(savedArtificialIntelligenceFile.Patterns[i].Events[j].Conditions[k].GetType()), "Condition types do not match");
                     }
 
                     for (int k = 0; k < artificialIntelligenceFile.Patterns[i].Events[j].Actions.Count; k++) {
-                        Assert.AreEqual(artificialIntelligenceFile.Patterns[i].Events[j].Actions[k].GetType(), artificialIntelligenceFile.Patterns[i].Events[j].Actions[k].GetType(), "Action types do not match");
+                        Assert.That(artificialIntelligenceFile.Patterns[i].Events[j].Actions[k].GetType().Equals(savedArtificialIntelligenceFile.Patterns[i].Events[j].Actions[k].GetType()), "Action types do not match");
                     }
                 }
             }

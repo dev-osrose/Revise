@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Revise.Files.Tests</RootNamespace>
     <AssemblyName>Revise.Files.Tests</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsPackable>false</IsPackable>
+    <LangVersion>latestmajor</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -14,7 +15,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject></StartupObject>
-    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
   	<MyTestFiles Include="Files\*.*"/>
@@ -26,10 +26,7 @@
     <ProjectReference Include="..\Revise\Revise.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
   </ItemGroup>
 </Project>

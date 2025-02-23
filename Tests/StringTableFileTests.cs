@@ -23,15 +23,15 @@ using System.IO;
 using NUnit.Framework;
 using Revise.STL;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="StringTableFile"/> class.
     /// </summary>
     [TestFixture]
     public class StringTableFileTests {
-        private const string ITEM_TEST_FILE = "Tests/Files/LIST_FACEITEM_S.STL";
-        private const string QUEST_TEST_FILE = "Tests/Files/LIST_QUEST_S.STL";
-        private const string NORMAL_TEST_FILE = "Tests/Files/STR_ITEMTYPE.STL";
+        private const string ItemTestFile = "Tests/Files/LIST_FACEITEM_S.STL";
+        private const string QuestTestFile = "Tests/Files/LIST_QUEST_S.STL";
+        private const string NormalTestFile = "Tests/Files/STR_ITEMTYPE.STL";
 
         /// <summary>
         /// Tests the load method using the specified file path and row count.
@@ -49,8 +49,8 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(rowCount, stringTableFile.RowCount, "Incorrect row count");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(rowCount.Equals(stringTableFile.RowCount), "Incorrect row count");
         }
 
         /// <summary>
@@ -68,21 +68,21 @@ namespace Revise.Tests {
             savedStringTableFile.Load(savedStream);
             savedStream.Close();
 
-            Assert.AreEqual(stringTableFile.TableType, stringTableFile.TableType, "Table types do not match");
-            Assert.AreEqual(stringTableFile.RowCount, stringTableFile.RowCount, "Row counts do not match");
+            Assert.That(stringTableFile.TableType.Equals(savedStringTableFile.TableType), "Table types do not match");
+            Assert.That(stringTableFile.RowCount.Equals(savedStringTableFile.RowCount), "Row counts do not match");
 
             for (int i = 0; i < stringTableFile.RowCount; i++) {
                 for (int j = 0; j < stringTableFile.LanguageCount; j++) {
                     StringTableLanguage language = (StringTableLanguage)j;
 
-                    Assert.AreEqual(stringTableFile[i].GetText(language), savedStringTableFile[i].GetText(language), "Text values do not match");
+                    Assert.That(stringTableFile[i].GetText(language).Equals(savedStringTableFile[i].GetText(language)), "Text values do not match");
 
                     if (stringTableFile.TableType == StringTableType.Item || stringTableFile.TableType == StringTableType.Quest) {
-                        Assert.AreEqual(stringTableFile[i].GetDescription(language), savedStringTableFile[i].GetDescription(language), "Description values do not match");
+                        Assert.That(stringTableFile[i].GetDescription(language).Equals(savedStringTableFile[i].GetDescription(language)), "Description values do not match");
 
                         if (stringTableFile.TableType == StringTableType.Quest) {
-                            Assert.AreEqual(stringTableFile[i].GetStartMessage(language), savedStringTableFile[i].GetStartMessage(language), "Start message values do not match");
-                            Assert.AreEqual(stringTableFile[i].GetEndMessage(language), savedStringTableFile[i].GetEndMessage(language), "End message values do not match");
+                            Assert.That(stringTableFile[i].GetStartMessage(language).Equals(savedStringTableFile[i].GetStartMessage(language)), "Start message values do not match");
+                            Assert.That(stringTableFile[i].GetEndMessage(language).Equals(savedStringTableFile[i].GetEndMessage(language)), "End message values do not match");
                         }
                     }
                 }
@@ -95,7 +95,7 @@ namespace Revise.Tests {
         [Test]
         public void TestItemLoadMethod() {
             const int ROW_COUNT = 43;
-            TestLoadMethod(ITEM_TEST_FILE, ROW_COUNT);
+            TestLoadMethod(ItemTestFile, ROW_COUNT);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Revise.Tests {
         [Test]
         public void TestQuestLoadMethod() {
             const int ROW_COUNT = 235;
-            TestLoadMethod(QUEST_TEST_FILE, ROW_COUNT);
+            TestLoadMethod(QuestTestFile, ROW_COUNT);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Revise.Tests {
         [Test]
         public void TestNormalLoadMethod() {
             const int ROW_COUNT = 75;
-            TestLoadMethod(NORMAL_TEST_FILE, ROW_COUNT);
+            TestLoadMethod(NormalTestFile, ROW_COUNT);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Revise.Tests {
         /// </summary>
         [Test]
         public void TestItemSaveMethod() {
-            TestSaveMethod(ITEM_TEST_FILE);
+            TestSaveMethod(ItemTestFile);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Revise.Tests {
         /// </summary>
         [Test]
         public void TestQuestSaveMethod() {
-            TestSaveMethod(QUEST_TEST_FILE);
+            TestSaveMethod(QuestTestFile);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Revise.Tests {
         /// </summary>
         [Test]
         public void TestNormalSaveMethod() {
-            TestSaveMethod(NORMAL_TEST_FILE);
+            TestSaveMethod(NormalTestFile);
         }
 
         /// <summary>
@@ -153,21 +153,21 @@ namespace Revise.Tests {
             StringTableFile savedStringTableFile = new StringTableFile();
             savedStringTableFile.AddRow(ROW_KEY, ROW_ID);
 
-            Assert.AreEqual(savedStringTableFile.RowCount, 1, "Row count is incorrect");
+            Assert.That(savedStringTableFile.RowCount.Equals(1), "Row count is incorrect");
 
             savedStringTableFile[0].SetText(ROW_VALUE_1);
             string rowValue = savedStringTableFile[0].GetText();
 
-            Assert.AreEqual(rowValue, ROW_VALUE_1, "Row value is incorrect");
+            Assert.That(rowValue.Equals(ROW_VALUE_1), "Row value is incorrect");
 
             savedStringTableFile[ROW_KEY].SetText(ROW_VALUE_2);
             rowValue = savedStringTableFile[ROW_KEY].GetText();
 
-            Assert.AreEqual(rowValue, ROW_VALUE_2, "Row value is incorrect");
+            Assert.That(rowValue.Equals(ROW_VALUE_2), "Row value is incorrect");
 
             savedStringTableFile.RemoveRow(ROW_KEY);
 
-            Assert.AreEqual(savedStringTableFile.RowCount, 0, "Row count is incorrect");
+            Assert.That(savedStringTableFile.RowCount.Equals(0), "Row count is incorrect");
         }
     }
 }

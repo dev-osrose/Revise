@@ -23,20 +23,20 @@ using System.IO;
 using NUnit.Framework;
 using Revise.ZMO;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="MotionFile"/> class.
     /// </summary>
     [TestFixture]
     public class MotionFileTests {
-        private const string TEST_FILE = "Tests/Files/_WIND_01.ZMO";
+        private const string TestFile = "Tests/Files/_WIND_01.ZMO";
 
         /// <summary>
         /// Tests the load method.
         /// </summary>
         [Test]
         public void TestLoadMethod() {
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -48,7 +48,7 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             MotionFile motionFile = new MotionFile();
-            motionFile.Load(TEST_FILE);
+            motionFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             motionFile.Save(savedStream);
@@ -69,15 +69,15 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(motionFile.FramesPerSecond, savedMotionFile.FramesPerSecond, "Frames per second values do not match");
-            Assert.AreEqual(motionFile.ChannelCount, savedMotionFile.ChannelCount, "Channel counts do not match");
+            Assert.That(motionFile.FramesPerSecond.Equals(savedMotionFile.FramesPerSecond), "Frames per second values do not match");
+            Assert.That(motionFile.ChannelCount.Equals(savedMotionFile.ChannelCount), "Channel counts do not match");
 
             for (int i = 0; i < motionFile.ChannelCount; i++) {
-                Assert.AreEqual(motionFile[i].Type, savedMotionFile[i].Type, "Channel types do not match");
-                Assert.AreEqual(motionFile[i].Index, savedMotionFile[i].Index, "Channel index values do not match");
+                Assert.That(motionFile[i].Type.Equals(savedMotionFile[i].Type), "Channel types do not match");
+                Assert.That(motionFile[i].Index.Equals(savedMotionFile[i].Index), "Channel index values do not match");
             }
 
-            Assert.AreEqual(motionFile.FramesPerSecond, savedMotionFile.FramesPerSecond, "Frame counts do not match");
+            Assert.That(motionFile.FramesPerSecond.Equals(savedMotionFile.FramesPerSecond), "Frame counts do not match");
         }
     }
 }

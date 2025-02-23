@@ -29,7 +29,7 @@ namespace Revise.Tests {
     /// </summary>
     [TestFixture]
     public class TableFileTests {
-        private const string TEST_FILE = "Tests/Files/O_RANGE.TBL";
+        private const string TestFile = "Tests/Files/O_RANGE.TBL";
 
         /// <summary>
         /// Tests the load method.
@@ -38,7 +38,7 @@ namespace Revise.Tests {
         public void TestLoadMethod() {
             const int MAXIMUM_RANGE = 42;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -50,8 +50,8 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(MAXIMUM_RANGE, tableFile.MaximumRange, "Incorrect maximum range");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(MAXIMUM_RANGE.Equals(tableFile.MaximumRange), "Incorrect maximum range");
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             TableFile tableFile = new TableFile();
-            tableFile.Load(TEST_FILE);
+            tableFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             tableFile.Save(savedStream);
@@ -72,18 +72,18 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(tableFile.MaximumRange, savedTableFile.MaximumRange, "Maximum range does not match");
+            Assert.That(tableFile.MaximumRange.Equals(savedTableFile.MaximumRange), "Maximum range does not match");
 
             for (int i = 0; i < tableFile.MaximumRange; i++) {
-                Assert.AreEqual(tableFile.StartIndices[i], tableFile.StartIndices[i], "Start index does not match");
-                Assert.AreEqual(tableFile.IndexCounts[i], tableFile.IndexCounts[i], "Index count does not match");
+                Assert.That(tableFile.StartIndices[i].Equals(tableFile.StartIndices[i]), "Start index does not match");
+                Assert.That(tableFile.IndexCounts[i].Equals(tableFile.IndexCounts[i]), "Index count does not match");
             }
 
-            Assert.AreEqual(tableFile.Points.Count, savedTableFile.Points.Count, "Points count does not match");
+            Assert.That(tableFile.Points.Count.Equals(savedTableFile.Points.Count), "Points count does not match");
 
             for (int i = 0; i < tableFile.Points.Count; i++) {
-                Assert.AreEqual(tableFile.Points[i].X, tableFile.Points[i].X, "Points do not match");
-                Assert.AreEqual(tableFile.Points[i].Y, tableFile.Points[i].Y, "Points do not match");
+                Assert.That(tableFile.Points[i].X.Equals(tableFile.Points[i].X), "Points do not match");
+                Assert.That(tableFile.Points[i].Y.Equals(tableFile.Points[i].Y), "Points do not match");
             }
         }
     }

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Microsoft.VisualBasic.FileIO;
 using Revise.Exceptions;
 
 namespace Revise.STB {
@@ -97,6 +98,38 @@ namespace Revise.STB {
                 }
 
                 return rows[row];
+            }
+        }
+
+        public void LoadCsv(Stream stream)
+        {
+            using TextFieldParser parser = new TextFieldParser(stream);
+            parser.Delimiters = [","];
+            parser.HasFieldsEnclosedInQuotes = true;
+            parser.TextFieldType = FieldType.Delimited;
+            parser.TrimWhiteSpace = true;
+            bool columnsCreated = false;
+            while (!parser.EndOfData)
+            {
+                var fields = parser.ReadFields()!;
+                if (!columnsCreated)
+                {
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        columns.Add(new DataColumn());
+                        SetColumnName(i, fields[i]);
+                    }
+                    columnsCreated = true;
+                }
+                else
+                {
+                    var row = new DataRow(ColumnCount);
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        row[i] = fields[i];
+                    }
+                    rows.Add(row);
+                }
             }
         }
 

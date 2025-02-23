@@ -23,13 +23,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.TIL;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="TileFile"/> class.
     /// </summary>
     [TestFixture]
     public class TileFileTests {
-        private const string TEST_FILE = "Tests/Files/31_31.TIL";
+        private const string TestFile = "Tests/Files/31_31.TIL";
 
         /// <summary>
         /// Tests the load method.
@@ -39,7 +39,7 @@ namespace Revise.Tests {
             const int HEIGHT = 16;
             const int WIDTH = 16;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -51,9 +51,9 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(WIDTH, tileFile.Width, "Incorrect width");
-            Assert.AreEqual(HEIGHT, tileFile.Height, "Incorrect height");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(WIDTH.Equals(tileFile.Width), "Incorrect width");
+            Assert.That(HEIGHT.Equals(tileFile.Height), "Incorrect height");
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             TileFile tileFile = new TileFile();
-            tileFile.Load(TEST_FILE);
+            tileFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             tileFile.Save(savedStream);
@@ -74,15 +74,15 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(tileFile.Width, savedTileFile.Width, "Width values do not match");
-            Assert.AreEqual(tileFile.Height, savedTileFile.Height, "Height values do not match");
+            Assert.That(tileFile.Width.Equals(savedTileFile.Width), "Width values do not match");
+            Assert.That(tileFile.Height.Equals(savedTileFile.Height), "Height values do not match");
 
             for (int x = 0; x < tileFile.Height; x++) {
                 for (int y = 0; y < tileFile.Width; y++) {
-                    Assert.AreEqual(tileFile[x, y].Brush, savedTileFile[x, y].Brush, "Brush values do not match");
-                    Assert.AreEqual(tileFile[x, y].TileIndex, savedTileFile[x, y].TileIndex, "Tile index values do not match");
-                    Assert.AreEqual(tileFile[x, y].TileSet, savedTileFile[x, y].TileSet, "Tile set values do not match");
-                    Assert.AreEqual(tileFile[x, y].Tile, savedTileFile[x, y].Tile, "Tile values do not match");
+                    Assert.That(tileFile[x, y].Brush.Equals(savedTileFile[x, y].Brush), "Brush values do not match");
+                    Assert.That(tileFile[x, y].TileIndex.Equals(savedTileFile[x, y].TileIndex), "Tile index values do not match");
+                    Assert.That(tileFile[x, y].TileSet.Equals(savedTileFile[x, y].TileSet), "Tile set values do not match");
+                    Assert.That(tileFile[x, y].Tile.Equals(savedTileFile[x, y].Tile), "Tile values do not match");
                 }
             }
         }

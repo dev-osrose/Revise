@@ -23,20 +23,20 @@ using System.IO;
 using NUnit.Framework;
 using Revise.ZCA;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="CameraFile"/> class.
     /// </summary>
     [TestFixture]
     public class CameraFileTests {
-        private const string TEST_FILE = "Tests/Files/CAMERA.ZCA";
+        private const string TestFile = "Tests/Files/CAMERA.ZCA";
 
         /// <summary>
         /// Tests the load method.
         /// </summary>
         [Test]
         public void TestLoadMethod() {
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -48,7 +48,7 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             CameraFile cameraFile = new CameraFile();
-            cameraFile.Load(TEST_FILE);
+            cameraFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             cameraFile.Save(savedStream);
@@ -69,16 +69,16 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(cameraFile.ProjectionType, savedCameraFile.ProjectionType, "Projection types do not match");
-            Assert.AreEqual(cameraFile.ModelView, savedCameraFile.ModelView, "Model view matrices do not match");
-            Assert.AreEqual(cameraFile.Projection, savedCameraFile.Projection, "Projection matrices do not match");
-            Assert.AreEqual(cameraFile.FieldOfView, savedCameraFile.FieldOfView, "Field of view values do not match");
-            Assert.AreEqual(cameraFile.AspectRatio, savedCameraFile.AspectRatio, "Aspect ratio values do not match");
-            Assert.AreEqual(cameraFile.NearPlane, savedCameraFile.NearPlane, "Near plane values do not match");
-            Assert.AreEqual(cameraFile.FarPlane, savedCameraFile.FarPlane, "Far plane values do not match");
-            Assert.AreEqual(cameraFile.Eye, savedCameraFile.Eye, "Eye positions do not match");
-            Assert.AreEqual(cameraFile.Center, savedCameraFile.Center, "Center position do not match");
-            Assert.AreEqual(cameraFile.Up, savedCameraFile.Up, "Up positions do not match");
+            Assert.That(cameraFile.ProjectionType.Equals(savedCameraFile.ProjectionType), "Projection types do not match");
+            Assert.That(cameraFile.ModelView.Equals(savedCameraFile.ModelView), "Model view matrices do not match");
+            Assert.That(cameraFile.Projection.Equals(savedCameraFile.Projection), "Projection matrices do not match");
+            Assert.That(cameraFile.FieldOfView.Equals(savedCameraFile.FieldOfView), "Field of view values do not match");
+            Assert.That(cameraFile.AspectRatio.Equals(savedCameraFile.AspectRatio), "Aspect ratio values do not match");
+            Assert.That(cameraFile.NearPlane.Equals(savedCameraFile.NearPlane), "Near plane values do not match");
+            Assert.That(cameraFile.FarPlane.Equals(savedCameraFile.FarPlane), "Far plane values do not match");
+            Assert.That(cameraFile.Eye.Equals(savedCameraFile.Eye), "Eye positions do not match");
+            Assert.That(cameraFile.Center.Equals(savedCameraFile.Center), "Center position do not match");
+            Assert.That(cameraFile.Up.Equals(savedCameraFile.Up), "Up positions do not match");
         }
     }
 }

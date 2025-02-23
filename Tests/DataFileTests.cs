@@ -24,13 +24,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.STB;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="DataFile"/> class.
     /// </summary>
     [TestFixture]
     public class DataFileTests {
-        private const string TEST_FILE = "Tests/Files/LIST_QUEST.STB";
+        private const string TestFile = "Tests/Files/LIST_QUEST.STB";
 
         /// <summary>
         /// Tests the load method.
@@ -40,7 +40,7 @@ namespace Revise.Tests {
             const int ROW_COUNT = 5501;
             const int COLUMN_COUNT = 6;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -52,9 +52,9 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(ROW_COUNT, dataFile.RowCount, "Incorrect row count");
-            Assert.AreEqual(COLUMN_COUNT, dataFile.ColumnCount, "Incorrect column count");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(ROW_COUNT.Equals(dataFile.RowCount), "Incorrect row count");
+            Assert.That(COLUMN_COUNT.Equals(dataFile.ColumnCount), "Incorrect column count");
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             DataFile dataFile = new DataFile();
-            dataFile.Load(TEST_FILE);
+            dataFile.Load(TestFile);
 
             MemoryStream savedStream = new MemoryStream();
             dataFile.Save(savedStream);
@@ -73,12 +73,12 @@ namespace Revise.Tests {
             savedDataFile.Load(savedStream);
             savedStream.Close();
 
-            Assert.AreEqual(dataFile.RowCount, savedDataFile.RowCount, "Row counts do not match");
-            Assert.AreEqual(dataFile.ColumnCount, savedDataFile.ColumnCount, "Column counts do not match");
+            Assert.That(dataFile.RowCount.Equals(savedDataFile.RowCount), "Row counts do not match");
+            Assert.That(dataFile.ColumnCount.Equals(savedDataFile.ColumnCount), "Column counts do not match");
 
             for (int i = 0; i < dataFile.RowCount; i++) {
                 for (int j = 0; j < dataFile.ColumnCount; j++) {
-                    Assert.AreEqual(dataFile[i][j], savedDataFile[i][j], "Cell values do not match");
+                    Assert.That(dataFile[i][j].Equals(savedDataFile[i][j]), "Cell values do not match");
                 }
             }
         }
@@ -98,9 +98,9 @@ namespace Revise.Tests {
 
             dataFile[0][0] = CELL_VALUE;
 
-            Assert.AreEqual(dataFile.GetColumnName(0), COLUMN_HEADER, "Incorrect column header");
-            Assert.AreEqual(dataFile.GetColumnWidth(0), COLUMN_WIDTH, "Incorrect column width");
-            Assert.AreEqual(dataFile[0][0], CELL_VALUE, "Incorrect cell value");
+            Assert.That(dataFile.GetColumnName(0).Equals(COLUMN_HEADER), "Incorrect column header");
+            Assert.That(dataFile.GetColumnWidth(0).Equals(COLUMN_WIDTH), "Incorrect column width");
+            Assert.That(dataFile[0][0].Equals(CELL_VALUE), "Incorrect cell value");
 
             dataFile.RemoveColumn(0);
 

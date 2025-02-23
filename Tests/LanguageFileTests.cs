@@ -24,13 +24,13 @@ using System.IO;
 using NUnit.Framework;
 using Revise.LTB;
 
-namespace Revise.Tests {
+namespace Revise.Files.Tests {
     /// <summary>
     /// Provides testing for the <see cref="LanguageFile"/> class.
     /// </summary>
     [TestFixture]
     public class LanguageFileTests {
-        private const string TEST_FILE = "Tests/Files/ULNGTB_CON.LTB";
+        private const string TestFile = "Tests/Files/ULNGTB_CON.LTB";
 
         /// <summary>
         /// Tests the load method.
@@ -40,7 +40,7 @@ namespace Revise.Tests {
             const int ROW_COUNT = 200;
             const int COLUMN_COUNT = 6;
 
-            Stream stream = File.OpenRead(TEST_FILE);
+            Stream stream = File.OpenRead(TestFile);
 
             stream.Seek(0, SeekOrigin.End);
             long fileSize = stream.Position;
@@ -52,9 +52,9 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(ROW_COUNT, languageFile.RowCount, "Incorrect row count");
-            Assert.AreEqual(COLUMN_COUNT, languageFile.ColumnCount, "Incorrect column count");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(ROW_COUNT.Equals(languageFile.RowCount), "Incorrect row count");
+            Assert.That(COLUMN_COUNT.Equals(languageFile.ColumnCount), "Incorrect column count");
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Revise.Tests {
         [Test]
         public void TestSaveMethod() {
             LanguageFile languageFile = new LanguageFile();
-            languageFile.Load(TEST_FILE);
+            languageFile.Load(TestFile);
             
             MemoryStream savedStream = new MemoryStream();
             languageFile.Save(savedStream);
@@ -75,12 +75,12 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(languageFile.RowCount, savedLanguageFile.RowCount, "Row counts do not match");
-            Assert.AreEqual(languageFile.ColumnCount, savedLanguageFile.ColumnCount, "Column counts do not match");
+            Assert.That(languageFile.RowCount.Equals(savedLanguageFile.RowCount), "Row counts do not match");
+            Assert.That(languageFile.ColumnCount.Equals(savedLanguageFile.ColumnCount), "Column counts do not match");
 
             for (int i = 0; i < languageFile.RowCount; i++) {
                 for (int j = 0; j < languageFile.ColumnCount; j++) {
-                    Assert.AreEqual(languageFile[i][j], savedLanguageFile[i][j], "Cell values do not match");
+                    Assert.That(languageFile[i][j].Equals(savedLanguageFile[i][j]), "Cell values do not match");
                 }
             }
         }
@@ -97,9 +97,9 @@ namespace Revise.Tests {
             languageFile.AddColumn();
             languageFile[0][0] = CELL_VALUE;
 
-            Assert.AreEqual(languageFile.ColumnCount, 1, "Column count is incorrect");
-            Assert.AreEqual(languageFile.RowCount, 1, "Row count is incorrect");
-            Assert.AreEqual(languageFile[0][0], CELL_VALUE, "Row value is incorrect");
+            Assert.That(languageFile.ColumnCount.Equals(1), "Column count is incorrect");
+            Assert.That(languageFile.RowCount.Equals(1), "Row count is incorrect");
+            Assert.That(languageFile[0][0].Equals(CELL_VALUE), "Row value is incorrect");
 
             languageFile.RemoveColumn(0);
 

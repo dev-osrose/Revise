@@ -51,9 +51,9 @@ namespace Revise.Tests {
             long streamPosition = stream.Position;
             stream.Close();
 
-            Assert.AreEqual(fileSize, streamPosition, "Not all of the file was read");
-            Assert.AreEqual(WIDTH, movementFile.Width, "Incorrect width");
-            Assert.AreEqual(HEIGHT, movementFile.Height, "Incorrect height");
+            Assert.That(fileSize.Equals(streamPosition), "Not all of the file was read");
+            Assert.That(WIDTH.Equals(movementFile.Width), "Incorrect width");
+            Assert.That(HEIGHT.Equals(movementFile.Height), "Incorrect height");
         }
 
         /// <summary>
@@ -74,12 +74,12 @@ namespace Revise.Tests {
 
             savedStream.Close();
 
-            Assert.AreEqual(movementFile.Width, savedMovementFile.Width, "Width values do not match");
-            Assert.AreEqual(movementFile.Height, savedMovementFile.Height, "Height values do not match");
+            Assert.That(movementFile.Width.Equals(savedMovementFile.Width), "Width values do not match");
+            Assert.That(movementFile.Height.Equals(savedMovementFile.Height), "Height values do not match");
 
             for (int x = 0; x < movementFile.Height; x++) {
                 for (int y = 0; y < movementFile.Width; y++) {
-                    Assert.AreEqual(movementFile[x, y], savedMovementFile[x, y], "Values do not match");
+                    Assert.That(movementFile[x, y].Equals(savedMovementFile[x, y]), "Values do not match");
                 }
             }
         }
